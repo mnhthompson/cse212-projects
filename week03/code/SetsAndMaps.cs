@@ -245,6 +245,34 @@ public static string Reverse( string s )
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+
+
+               
+        var earthquakelist = new List<string>();
+
+       
+        foreach (var Feature in featureCollection.features)
+        {
+            
+
+        string oak = Feature.Properties.Place;
+        double maple = Feature.Properties.Mag;
+
+        
+        earthquakelist.Add($"{oak} - Mag {maple}");
+        
+        }
+
+       
+        var earthquakearray = earthquakelist.ToArray();
+
+     
+
+        
+
+
+
+        return earthquakearray;
     }
 }
+//--------------------------------problem 5-------------------------------------------------------------------------------------------------------------------------------------
