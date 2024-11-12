@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 public static class SetsAndMaps
 {
@@ -19,11 +20,74 @@ public static class SetsAndMaps
     /// that there were no duplicates) and therefore should not be returned.
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
+    /// 
+
+//--------------------------------problem 1-------------------------------------------------------not complete-----------------------------------------------------------------
+
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+
+        var wordstorage = new HashSet<String>();
+        var wordstorage2 = new HashSet<String>();
+         string y = "";
+
+    
+            foreach (var x in words)
+            {wordstorage.Add(x);}
+
+
+
+        
+        foreach (var x in words)
+            {
+
+            if (wordstorage.Contains(x))
+
+                y = Reverse(x);
+
+                if (wordstorage.Contains(y))
+                {
+
+                    y = Reverse(x);
+
+                    wordstorage2.Add(y);
+                }
+
+        }
+
+           String[] stringArray = new String[wordstorage2.Count];
+            wordstorage2.CopyTo(stringArray);
+
+            words = stringArray;
+
+
+
+
+
+        return words;
     }
+
+
+
+public static string Reverse( string s )
+{
+    char[] charArray = s.ToCharArray();
+    Array.Reverse(charArray);
+    return new string(charArray);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
     /// <summary>
     /// Read a census file and summarize the degrees (education)
@@ -36,6 +100,11 @@ public static class SetsAndMaps
     /// </summary>
     /// <param name="filename">The name of the file to read</param>
     /// <returns>fixed array of divisors</returns>
+    /// 
+
+    //  {"Bachelors", 5355},    {"HS-grad", 10501},{"11th", 1175},"Masters", 1723},   {"9th", 514},    {"Some-college", 7291}, {"Assoc-acdm", 1067}, {"Assoc-voc", 1382},{"7th-8th", 646},{"Doctorate", 413}, {"Prof-school", 576}, {"5th-6th", 333},{"10th", 933}, {"1st-4th", 168},{"Preschool", 51}, {"12th", 433},
+
+    //--------------------------------problem 2-------------------------------------------------------------------------------------------------------------------------------------
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
         var degrees = new Dictionary<string, int>();
@@ -43,10 +112,39 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+
+            string degreeU = fields[3];
+
+
+           int x = Regex.Count(filename, degreeU);
+           //int x = Regex.Matches(filename, degreeU).Count;
+
+            degrees[degreeU] = x;
+
+
+            
+
         }
+
+        //Console.WriteLine(degrees);
 
         return degrees;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /// <summary>
     /// Determine if 'word1' and 'word2' are anagrams.  An anagram
@@ -64,6 +162,9 @@ public static class SetsAndMaps
     /// Reminder: You can access a letter by index in a string by 
     /// using the [] notation.
     /// </summary>
+    /// 
+
+    //--------------------------------problem 3-------------------------------------------------------------------------------------------------------------------------------------
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
@@ -84,6 +185,24 @@ public static class SetsAndMaps
     /// https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     /// 
     /// </summary>
+    /// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //--------------------------------problem 5-------------------------------------------------------------------------------------------------------------------------------------
     public static string[] EarthquakeDailySummary()
     {
         const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
