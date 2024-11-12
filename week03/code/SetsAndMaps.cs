@@ -22,54 +22,39 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     /// 
 
-//--------------------------------problem 1-------------------------------------------------------not complete-----------------------------------------------------------------
-
+//--------------------------------problem 1-------------------------------------------------------complete-----------------------------------------------------------------
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-
         var wordstorage = new HashSet<String>();
         var wordstorage2 = new HashSet<String>();
+        var filterlist = new HashSet<String>();
          string y = "";
-
-    
             foreach (var x in words)
-            {wordstorage.Add(x);}
-
-
-
-        
+            {wordstorage.Add(x);}     
         foreach (var x in words)
             {
-
             if (wordstorage.Contains(x))
-
                 y = Reverse(x);
-
                 if (wordstorage.Contains(y))
                 {
-
-                    y = Reverse(x);
-
-                    wordstorage2.Add(y);
+                    if (filterlist.Contains(x))
+                    continue;
+                    else
+                        if (y == x)
+                        continue;
+                        else
+                        filterlist.Add(x);
+                        filterlist.Add(y);
+                        wordstorage2.Add($"{x} & {y}");
                 }
 
         }
-
            String[] stringArray = new String[wordstorage2.Count];
             wordstorage2.CopyTo(stringArray);
-
             words = stringArray;
-
-
-
-
-
         return words;
     }
-
-
-
 public static string Reverse( string s )
 {
     char[] charArray = s.ToCharArray();
@@ -104,30 +89,37 @@ public static string Reverse( string s )
 
     //  {"Bachelors", 5355},    {"HS-grad", 10501},{"11th", 1175},"Masters", 1723},   {"9th", 514},    {"Some-college", 7291}, {"Assoc-acdm", 1067}, {"Assoc-voc", 1382},{"7th-8th", 646},{"Doctorate", 413}, {"Prof-school", 576}, {"5th-6th", 333},{"10th", 933}, {"1st-4th", 168},{"Preschool", 51}, {"12th", 433},
 
-    //--------------------------------problem 2-------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------problem 2-------------------------------------------Needs fixed---------------------------------------------------------------------------
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
         var degrees = new Dictionary<string, int>();
+        int count = 0;
         foreach (var line in File.ReadLines(filename))
         {
+            count+=1;
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
 
             string degreeU = fields[3];
 
 
-           int x = Regex.Count(filename, degreeU);
-           //int x = Regex.Matches(filename, degreeU).Count;
+            if (!degrees.ContainsKey(degreeU))
+                {
+              
+                    degrees[degreeU] = 1;
+                }
 
-            degrees[degreeU] = x;
-
-
-            
+               
+            else
+                {
+                   
+                    degrees[degreeU] += 1;}            
 
         }
 
-        //Console.WriteLine(degrees);
+        if (count == 32561)
 
+            return degrees;
         return degrees;
     }
 
@@ -164,12 +156,60 @@ public static string Reverse( string s )
     /// </summary>
     /// 
 
-    //--------------------------------problem 3-------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------problem 3--------------------------------Complete----------------------------------------------------------------------------
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+
+        word1 = word1.ToUpper();
+        word2 = word2.ToUpper();
+
+       word1 = Regex.Replace(word1," ", "");
+       word2 = Regex.Replace(word2," ", "");
+
+       int x = word1.Length;
+       int y = word2.Length;
+
+
+
+        if (x == y)
+        {
+
+            string aa = String.Concat(word1.OrderBy(c => c));
+            string bb = String.Concat(word2.OrderBy(c => c));
+                if (aa == bb)
+                    return true;
+
+                else
+                    return false;
+        }
+        
+        else
+        {
+            return false;
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
@@ -186,21 +226,6 @@ public static string Reverse( string s )
     /// 
     /// </summary>
     /// 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //--------------------------------problem 5-------------------------------------------------------------------------------------------------------------------------------------
     public static string[] EarthquakeDailySummary()
