@@ -26,16 +26,29 @@ public class LinkedList : IEnumerable<int>
             _head = newNode; // Update the head to point to the new node
         }
     }
-
+//------------------------Problem 1----------Done----------------------------------------------------
     /// <summary>
     /// Insert a new node at the back (i.e. the tail) of the linked list.
     /// </summary>
     public void InsertTail(int value)
     {
-        // TODO Problem 1
+                // Create new node
+        Node newNode = new(value);
+        // If the list is empty, then point both head and tail to the new node.
+        if (_tail is null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        // If the list is not empty, then only tail will be affected.
+        else
+        {
+            newNode.Prev = _tail; // Connect new node to the previous tail
+            _tail.Next = newNode; // Connect the previous tail to the new node
+            _tail = newNode; // Update the tail to point to the new node
+        }
     }
-
-
+//---------------------------------------------------------------------------------------------------
     /// <summary>
     /// Remove the first node (i.e. the head) of the linked list.
     /// </summary>
@@ -57,16 +70,29 @@ public class LinkedList : IEnumerable<int>
             _head = _head.Next; // Update the head to point to the second node
         }
     }
-
-
+//-----------------------Problem 2---------Done-----------------------------------------------------
     /// <summary>
     /// Remove the last node (i.e. the tail) of the linked list.
     /// </summary>
     public void RemoveTail()
     {
-        // TODO Problem 2
+                // If the list has only one item in it, then set head and tail 
+        // to null resulting in an empty list.  This condition will also
+        // cover an empty list.  Its okay to set to null again.
+        if (_head == _tail)
+        {
+            _head = null;
+            _tail = null;
+        }
+        // If the list has more than one item in it, then only the tail
+        // will be affected.
+        else if (_tail is not null)
+        {
+            _tail.Prev!.Next = null; // Disconnect the second node from the first node
+            _tail = _tail.Prev; // Update the tail to point to the second node
+        }
     }
-
+//---------------------------------------------------------------------------------------------------
     /// <summary>
     /// Insert 'newValue' after the first occurrence of 'value' in the linked list.
     /// </summary>
@@ -102,22 +128,77 @@ public class LinkedList : IEnumerable<int>
             curr = curr.Next; // Go to the next node to search for 'value'
         }
     }
-
+//-----------------------Problem 3------------------------------Done-----------------------------------
     /// <summary>
     /// Remove the first node that contains 'value'.
     /// </summary>
     public void Remove(int value)
     {
-        // TODO Problem 3
+          // Search for the node that matches 'value' by starting at the 
+        // head of the list.
+        Node? curr = _head;
+        while (curr is not null)
+        {
+            if (curr.Data == value)
+            {
+                // If the location of 'value' is at the end of the list,
+                // then we can call insert_tail to add 'new_value'
+                if (curr == _tail)
+                {
+                    RemoveTail();
+                }
+                else if (curr == _head)
+                {
+                    RemoveHead();
+                }
+                else
+                {
+                    curr.Next!.Prev = curr.Prev;
+                    curr.Prev!.Next = curr.Next;
+                }
+                return;
+                           }
+            curr = curr.Next; // Go to the next node to search for 'value'
+        }
     }
-
+//---------------------------------------------------------------------------------------------------
+//---------------------------Problem 4--------------------------Done-------------------------------------
     /// <summary>
     /// Search for all instances of 'oldValue' and replace the value to 'newValue'.
     /// </summary>
     public void Replace(int oldValue, int newValue)
     {
-        // TODO Problem 4
+                  // Search for the node that matches 'value' by starting at the 
+        // head of the list.
+        Node? curr = _head;
+        while (curr is not null)
+        {
+            if (curr.Data == oldValue)
+            {
+                // If the location of 'value' is at the end of the list,
+                // then we can call insert_tail to add 'new_value'
+                if (curr == _tail)
+                {
+                    RemoveTail();
+                    InsertTail(newValue);
+                }
+                else if (curr == _head)
+                {
+                    RemoveHead();
+                    InsertHead(newValue);
+                }
+                else
+                {
+                    curr.Data = newValue;
+                    
+                }
+                           }
+            curr = curr.Next; // Go to the next node to search for 'value'
+        }
     }
+//---------------------------------------------------------------------------------------------------
+
+
 
     /// <summary>
     /// Yields all values in the linked list
@@ -141,14 +222,23 @@ public class LinkedList : IEnumerable<int>
         }
     }
 
+    //-------------------------Problem 5--------------------------------------------------------------------------
+
     /// <summary>
     /// Iterate backward through the Linked List
     /// </summary>
     public IEnumerable Reverse()
     {
-        // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+     Node? curr = _tail;
+        while (curr is not null)
+    {
+        yield return curr.Data; 
+        curr = curr.Prev;
     }
+    }
+//---------------------------------------------------------------------------------------------------
+
+
 
     public override string ToString()
     {
