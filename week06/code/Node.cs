@@ -8,12 +8,17 @@ public class Node
     {
         this.Data = data;
     }
-
+//--------------------------------------------Problem 1----Done------------------------------------------------------------------------------------------------------
     public void Insert(int value)
     {
-        // TODO Start Problem 1
+       
 
-        if (value < Data)
+        if(value == Data)
+        {
+            return;
+        }
+
+        else if (value < Data)
         {
             // Insert to the left
             if (Left is null)
@@ -30,16 +35,60 @@ public class Node
                 Right.Insert(value);
         }
     }
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+//----------------------------------------------Problem 2----------------------------------------------------------------------------------------------------------------
     public bool Contains(int value)
-    {
+      {
         // TODO Start Problem 2
-        return false;
+        if (Data == value)
+        {
+            return true;
+        }
+        else if (Data > value)
+        {
+            if (Left is null)
+            {
+                return false;
+            }
+            else
+            {
+                return Left.Contains(value);
+            }
+        }
+        else
+        {
+            if (Right is null)
+            {
+                return false;
+            }
+            else
+            {
+                return Right.Contains(value);
+            }
+        }
     }
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
 
+
+ 
+ //----------------------------------------------Problem 4----------------------------------------------------------------------------------------------------------------
+ 
     public int GetHeight()
     {
         // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+             if (this is null)
+        {
+            return 0;
+        }
+        int lHeight = Left?.GetHeight() ?? 0;
+        int rHeight = Right?.GetHeight() ?? 0;
+
+        return Math.Max(lHeight, rHeight) + 1;
     }
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
